@@ -182,8 +182,7 @@ class DelugeTransferProtocolTestCase(unittest.TestCase):
         """
         self.transfer.dataReceived(rencode.dumps(self.msg1))
         self.assertEqual(len(self.transfer.get_messages_in()), 0)
-        self.assertEqual(self.transfer._message_length, 0)
-        self.assertEqual(len(self.transfer._buffer), 0)
+        self.assertEqual(len(self.transfer.buf), 0)
 
     def test_receive_two_concatenated_messages(self):
         """
