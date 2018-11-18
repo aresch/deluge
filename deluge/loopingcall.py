@@ -8,6 +8,7 @@
 #
 
 import asyncio
+from typing import Callable, Union
 
 
 class AlreadyRunning(Exception):
@@ -19,15 +20,16 @@ class NotRunning(Exception):
 
 
 class LoopingCall:
-    def __init__(self, func):
+    task: Union[asyncio.Task, None] = None
+
+    def __init__(self, func: Callable):
         self.func = func
-        self.task = None
 
     @property
-    def running(self):
+    def running(self) -> bool:
         return self.task is not None
 
-    def start(self, interval, now=True):
+    def start(self, interval: int, now: bool = True):
         if self.running:
             raise AlreadyRunning()
         self.task = asyncio.create_task(self._run(interval, now))
@@ -44,7 +46,7 @@ class LoopingCall:
         finally:
             self.task = None
 
-    async def _run(self, interval, now=True):
+    async def _run(self, interval: int, now:bool = True):
         if now:
             await self.func()
         while True:
