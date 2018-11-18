@@ -84,3 +84,10 @@ class LoopingCallTests(ClockedTestCase):
         looping_call.start(2)
         await self.advance(0)
         self.assertEqual(self.calls, ['foobar'])
+
+    async def test_restart(self):
+        await self.start_looping_call()
+        self.assertEqual(len(self.calls), 1)
+        await self.looping_call.stop()
+        await self.start_looping_call()
+        self.assertEqual(len(self.calls), 2)
