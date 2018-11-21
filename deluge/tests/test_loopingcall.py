@@ -15,7 +15,6 @@ from deluge.loopingcall import LoopingCall, AlreadyRunning, NotRunning
 
 
 class LoopingCallTests(ClockedTestCase):
-
     def setUp(self):
         super().setUp()
         self.calls = []
