@@ -46,7 +46,7 @@ class LoopingCall:
         finally:
             self.task = None
 
-    async def _run(self, interval: int, now:bool = True):
+    async def _run(self, interval: int, now: bool):
         if now:
             await self.func()
         while True:
