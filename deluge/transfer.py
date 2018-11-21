@@ -15,6 +15,7 @@ class DelugeTransferProtocol(DelugeRPCProtocol):
     """
     Twisted compatibility class.
     """
+
     def dataReceived(self, data):
         self.data_received(data)
 
