@@ -153,7 +153,7 @@ class Console(UI):
         super(Console, self).start(self.console_parser)
         from deluge.ui.console.main import ConsoleUI  # import here because (see top)
 
-        def run(options):
+        def run():
             try:
                 c = ConsoleUI(self.options, self.console_cmds, self.parser.log_stream)
                 return c.start_ui()
@@ -161,9 +161,7 @@ class Console(UI):
                 log.exception(ex)
                 raise
 
-        return deluge.common.run_profiled(
-            run,
-            self.options,
-            output_file=self.options.profile,
-            do_profile=self.options.profile,
-        )
+        if self.options.profile:
+            return deluge.common.run_profiled(run, output_file=self.options.profile)
+        else:
+            return run(self.options)

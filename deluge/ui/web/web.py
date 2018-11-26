@@ -86,6 +86,7 @@ class Web(UI):
                 log.exception(ex)
                 raise
 
-        run_profiled(
-            run, output_file=self.options.profile, do_profile=self.options.profile
-        )
+        if self.options.profile:
+            run_profiled(run, output_file=self.options.profile)
+        else:
+            run()

@@ -43,20 +43,18 @@ class Gtk(UI):
         from .gtkui import GtkUI
         import deluge.common
 
-        def run(options):
+        def run():
             try:
-                gtkui = GtkUI(options)
+                gtkui = GtkUI(self.options)
                 gtkui.start()
             except Exception as ex:
                 log.exception(ex)
                 raise
 
-        deluge.common.run_profiled(
-            run,
-            self.options,
-            output_file=self.options.profile,
-            do_profile=self.options.profile,
-        )
+        if self.options.profile:
+            deluge.common.run_profiled(run, output_file=self.options.profile)
+        else:
+            run()
 
 
 def start():
